@@ -1,13 +1,14 @@
-const Title = ()=>{
+/* const Title = ()=>{
   return <h1>Swiggy</h1>
-}
+} */
 
 const Header = () =>{
 
   return (
-  <div className='Header'>
-    <Title/>
+ /*  <div className='Header'>
+    <Title/> */
     <div className="nav-items">
+      <span>Home</span>
       <ul>
         <span>offers</span>
         <span>Help</span>
@@ -15,7 +16,7 @@ const Header = () =>{
         <span>Cart</span>
       </ul>
     </div>
-    </div>
+    /* </div> */
   )
 }
 export default Header;

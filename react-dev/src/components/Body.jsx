@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import restaurantList from "../assets/RestaurantData/Restaurant"
 
 /* function filtersearch(searchText,searchRestaurant){
@@ -23,13 +23,8 @@ function filtersearch(inputValue, searchRestaurant) {
   return filteredResults;
 }
 
-
-
-
 const RestaurantCard = (props)=>{
-
   const imageUrl = import.meta.env.VITE_imageUrl
-
   return (
   <div className='restaurantcardmenu'>
     <img src={`${imageUrl}${props.restaurant?.info?.cloudinaryImageId}`} alt="img" />
@@ -43,6 +38,18 @@ const RestaurantCard = (props)=>{
 const Body = () => {
   const [searchText,setSearchText]= useState('')
   const [searchRestaurant , setSearchRestaurant] = useState(restaurantList);
+
+  useEffect(()=>{
+    getRestaurant();  
+  },[searchText])
+
+  async function getRestaurant(){
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.742763&lng=76.6390797&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    const json = await data.json();
+    console.log(json)
+    setSearchRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+  }
+
 
 
   return (

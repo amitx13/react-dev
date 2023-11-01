@@ -1,7 +1,8 @@
-.Header{
+.nav-items{
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin: 0;
 }
 
 .nav-items > ul{
@@ -30,8 +31,7 @@
     border-radius: 10%;
 }
 .searchBar{
-    width:50%;
-    text-align: center;
+    width:20%;
 }
 .searchButton{
     width:5%;
