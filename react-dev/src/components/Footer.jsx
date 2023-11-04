@@ -1,6 +1,6 @@
 const Footer = ()=>{
   return(
-    <div className='footer'>Here's your meal</div>
+    <div className='footer'>@copywrite</div>
   )
 }
 export default Footer;

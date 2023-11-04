@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import restaurantList from "../assets/RestaurantData/Restaurant"
+import { ShimmerPostList } from "react-shimmer-effects";
+import YourComponent from "./NoItem";
 
 /* function filtersearch(searchText,searchRestaurant){
   const val = searchRestaurant.filter((Restaurant)=>{
@@ -17,9 +19,7 @@ function filtersearch(inputValue, searchRestaurant) {
     if(Restaurant.info.name.toLowerCase().includes(inputValue.toLowerCase())){
       return true;
     }
-
   });
-  
   return filteredResults;
 }
 
@@ -36,38 +36,50 @@ const RestaurantCard = (props)=>{
 }
 
 const Body = () => {
-  const [searchText,setSearchText]= useState('')
-  const [searchRestaurant , setSearchRestaurant] = useState(restaurantList);
+  const [searchText,setSearchText]= useState("");
+  const [filteredRestaurant , setfilteredRestaurant] = useState([]);
+  const [allRestaurant , setallRestaurant] = useState([]);
 
+/* console.log("render1"); */
   useEffect(()=>{
     getRestaurant();  
-  },[searchText])
-
+  },[])
   async function getRestaurant(){
     const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.742763&lng=76.6390797&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
     const json = await data.json();
-    console.log(json)
-    setSearchRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    setfilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    setallRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    /* console.log("render2"); */
   }
-
-
-
-  return (
+  if (! allRestaurant) return null;
+  return (allRestaurant?.length === 0) ? (
     <>
-      <input type="text" className="searchBar" onChange={(e)=>{
+    {/* {console.log(allRestaurant.length)} */}
+    <ShimmerPostList postStyle="STYLE_FOUR" col={4} row={3} gap={30} />
+    </>
+  ) : /* (filteredRestaurant?.length === 0)?(<h1>no Item found</h1>): */(
+    <>
+   {/*  {console.log(allRestaurant.length)}
+    {console.log(filteredRestaurant)} */}
+      <input type="text" className="searchBar" id="searchInput" onChange={(e)=>{
         setSearchText(e.target.value);
       }} />
       <button type="submit" className="searchButton" onClick={()=>{
-        const data = filtersearch(searchText,searchRestaurant)
-        console.log(data);
-        setSearchRestaurant(data);
+        const data = filtersearch(searchText,allRestaurant)
+        //console.log(data);
+        setfilteredRestaurant(data);
       }}>Search</button>
       <div className='restaurantcard'>
-      {searchRestaurant.map((restaurant) => (
+      {filteredRestaurant.map((restaurant) => (
+        <>
         <RestaurantCard restaurant={restaurant} key={restaurant.info.id} />
+        </>
       ))}
     </div>
     </>
   )
 }
 export default Body;
+
+//shimmer ui
+//updated search engine
