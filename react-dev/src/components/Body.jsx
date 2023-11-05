@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import restaurantList from "../assets/RestaurantData/Restaurant"
 import { ShimmerPostList } from "react-shimmer-effects";
 import YourComponent from "./NoItem";
 
@@ -44,12 +43,13 @@ const Body = () => {
   useEffect(()=>{
     getRestaurant();  
   },[])
+
   async function getRestaurant(){
     const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.742763&lng=76.6390797&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
     const json = await data.json();
-    setfilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    setallRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    /* console.log("render2"); */
+    setfilteredRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    setallRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
   }
   if (! allRestaurant) return null;
   return (allRestaurant?.length === 0) ? (
