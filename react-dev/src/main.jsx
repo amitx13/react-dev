@@ -10,6 +10,7 @@ import Error from './components/Error.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import Body from './components/Body.jsx'
+import Restaurant from './components/Restaurant.jsx'
 
 
 function App() {
@@ -47,8 +48,12 @@ const router = createBrowserRouter([
       {
       path :"/cart",
       element : <Cart/>
-      }
-    ]
+      },
+      {
+      path :"/restaurant/:id",
+      element : <Restaurant />,
+      },
+    ],
   },
 ])
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShimmerPostList } from "react-shimmer-effects";
 import YourComponent from "./NoItem";
+import {Link} from "react-router-dom";
 
 /* function filtersearch(searchText,searchRestaurant){
   const val = searchRestaurant.filter((Restaurant)=>{
@@ -14,7 +15,7 @@ import YourComponent from "./NoItem";
 function filtersearch(inputValue, searchRestaurant) {
 
   const filteredResults = searchRestaurant.filter((Restaurant) => {
-    console.log("Restaurant.info.name:", Restaurant.info.name);
+    //console.log("Restaurant.info.name:", Restaurant.info.name);
     if(Restaurant.info.name.toLowerCase().includes(inputValue.toLowerCase())){
       return true;
     }
@@ -49,7 +50,8 @@ const Body = () => {
     const json = await data.json();
     setfilteredRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     setallRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
+    //console.log(allRestaurant);
+    //console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
   }
   if (! allRestaurant) return null;
   return (allRestaurant?.length === 0) ? (
@@ -71,9 +73,9 @@ const Body = () => {
       }}>Search</button>
       <div className='restaurantcard'>
       {filteredRestaurant.map((restaurant) => (
-        <>
-        <RestaurantCard restaurant={restaurant} key={restaurant.info.id} />
-        </>
+        <Link key={restaurant.info.id}  to= {"/restaurant/"+restaurant.info.id}>
+          <RestaurantCard restaurant={restaurant} />
+        </Link>
       ))}
     </div>
     </>
