@@ -11,6 +11,11 @@
 .nav-items>ul>span{
     padding-left:40px ;
 }
+.nav-items a {
+  text-decoration: none; /* Remove underline */
+  color: #000; /* Change text color to black (or your desired color) */
+}
+
 .footer{
     position: fixed;
     bottom: 0;
@@ -23,11 +28,17 @@
     flex-wrap: wrap;
     justify-content: center;
     
+    
 }
 .restaurantcardmenu{
     outline: 2px solid transparent;
     margin: 10px;
 
+}
+
+.restaurantcard a{
+    text-decoration: none; /* Remove underline */
+    color: #000;
 }
 .restaurantcardmenu > img{
     width: 16rem;
@@ -40,4 +51,24 @@
 .searchButton{
     width:5%;
     height: 22px;
+}
+
+.menudetails{
+    outline: 2px solid transparent;
+    margin: 10px;
+}
+.menudetails>img{
+    width: 16rem;
+    height:14rem;
+    border-radius: 10%;
+}
+
+.restaurantmenu {
+    display: flex;
+    align-items: center;
+}
+
+.restaurantmenu a{
+    text-decoration: none; /* Remove underline */
+    color: #000;
 }

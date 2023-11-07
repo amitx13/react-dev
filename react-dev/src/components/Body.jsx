@@ -51,7 +51,7 @@ const Body = () => {
     setfilteredRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     setallRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     //console.log(allRestaurant);
-    //console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
+    console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
   }
   if (! allRestaurant) return null;
   return (allRestaurant?.length === 0) ? (
@@ -74,7 +74,7 @@ const Body = () => {
       <div className='restaurantcard'>
       {filteredRestaurant.map((restaurant) => (
         <Link key={restaurant.info.id}  to= {"/restaurant/"+restaurant.info.id}>
-          <RestaurantCard restaurant={restaurant} />
+          <RestaurantCard  restaurant = {restaurant}  />
         </Link>
       ))}
     </div>
