@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShimmerPostList } from "react-shimmer-effects";
-import YourComponent from "./NoItem";
 import {Link} from "react-router-dom";
-
-/* function filtersearch(searchText,searchRestaurant){
-  const val = searchRestaurant.filter((Restaurant)=>{
-    Restaurant.info.name.includes(searchText);
-  }
-  )
-  return val;
-} */
 
 
 function filtersearch(inputValue, searchRestaurant) {
@@ -82,6 +73,3 @@ const Body = () => {
   )
 }
 export default Body;
-
-//shimmer ui
-//updated search engine
