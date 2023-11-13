@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShimmerPostList } from "react-shimmer-effects";
 import {Link} from "react-router-dom";
+import UserContext from "./utils/UserContext";
 
 
 function filtersearch(inputValue, searchRestaurant) {
@@ -15,6 +16,7 @@ function filtersearch(inputValue, searchRestaurant) {
 }
 
 const RestaurantCard = (props)=>{
+  console.log("in the restaurant "+props);
   const imageUrl = import.meta.env.VITE_imageUrl
   return (
   <div className='restaurantcardmenu'>
@@ -22,6 +24,7 @@ const RestaurantCard = (props)=>{
     <div>{props.restaurant?.info?.name}</div>
     <div>{"areaName : "+props.restaurant?.info?.areaName}</div>
     <div>{"avgRating : "+props.restaurant?.info?.avgRating}</div>
+    <div>{props.owner.name}</div>
   </div>
   )
 }
@@ -30,8 +33,8 @@ const Body = () => {
   const [searchText,setSearchText]= useState("");
   const [filteredRestaurant , setfilteredRestaurant] = useState([]);
   const [allRestaurant , setallRestaurant] = useState([]);
+  const {owner,setUser} = useContext(UserContext);
 
-/* console.log("render1"); */
   useEffect(()=>{
     getRestaurant();  
   },[])
@@ -44,28 +47,35 @@ const Body = () => {
     //console.log(allRestaurant);
     console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
   }
+
   if (! allRestaurant) return null;
+
   return (allRestaurant?.length === 0) ? (
     <>
-    {/* {console.log(allRestaurant.length)} */}
     <ShimmerPostList postStyle="STYLE_FOUR" col={4} row={3} gap={30} />
     </>
-  ) : /* (filteredRestaurant?.length === 0)?(<h1>no Item found</h1>): */(
+  ) : (
     <>
-   {/*  {console.log(allRestaurant.length)}
-    {console.log(filteredRestaurant)} */}
       <input type="text" className="searchBar" id="searchInput" onChange={(e)=>{
         setSearchText(e.target.value);
       }} />
+
       <button type="submit" className="searchButton" onClick={()=>{
         const data = filtersearch(searchText,allRestaurant)
-        //console.log(data);
         setfilteredRestaurant(data);
       }}>Search</button>
+
+      <input type="text" className="contextTextbar" value={owner.name} onChange={ (e)=>{
+        setUser({
+          ...owner,
+          name:e.target.value,
+        })
+       }}/>
+
       <div className='restaurantcard'>
       {filteredRestaurant.map((restaurant) => (
         <Link key={restaurant.info.id}  to= {"/restaurant/"+restaurant.info.id}>
-          <RestaurantCard  restaurant = {restaurant}  />
+          <RestaurantCard  restaurant = {restaurant} owner={owner} />
         </Link>
       ))}
     </div>

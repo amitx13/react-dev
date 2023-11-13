@@ -1,4 +1,4 @@
-import React ,{lazy,Suspense}from 'react'
+import React ,{lazy,Suspense,useState}from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom'
@@ -11,17 +11,28 @@ import Footer from './components/Footer.jsx'
 import Body from './components/Body.jsx'
 import Restaurant from './components/Restaurant.jsx'
 import { ShimmerSocialPost } from "react-shimmer-effects";
-
+import UserContext from './components/utils/UserContext.jsx'
+import { Provider } from 'react-redux'
+import store from './components/utils/Store.jsx'
 
 const Profile = lazy(()=> import("./components/Profile.jsx"))
 
 function App() {
+  const [user, setUser] = useState({
+        name:"Xlr8Op",
+        email:"Xlr8@gmail.com",
+  })
   return (
-    <>
+    <Provider store={store}>
+    <UserContext.Provider value={{
+      owner:user,
+      setUser:setUser,
+    }}>
     <Header/>
     <Outlet/>
     <Footer/>
-    </>
+    </UserContext.Provider>
+    </Provider>
   )
 }
 
@@ -33,7 +44,7 @@ const router = createBrowserRouter([
     children:[
       {
       path :"/",
-      element : <Body/>
+      element : <Body />
       },
       {
       path :"/Offers",

@@ -4,12 +4,23 @@ import { ShimmerPostList } from "react-shimmer-effects";
 import '../index.css'
 import useRestaurant from "./utils/useRestaurant";
 import useOrdered from "./utils/useOrdered";
+import { addItems } from "./utils/cartSlice";
+import {useDispatch} from 'react-redux'
+
+
 
 
 const Restaurant = ()=>{
     const restaurantId = useParams();
     const ordered = useOrdered(restaurantId);
     const restaurantMenu = useRestaurant(restaurantId);
+
+    const dispatch = useDispatch();
+    
+    const handleCart = (name)=>{
+        console.log(name);
+        dispatch(addItems(name));
+    }
     
     const Restaurantmenu = (props)=>{
     const imageUrl = import.meta.env.VITE_imageUrl
@@ -24,9 +35,14 @@ const Restaurant = ()=>{
     )
     }
 
+
     const MenuCard = (props) =>{
-        return<div >
-             {props.restaurant?.card?.info?.name}
+        const name = props.restaurant?.card?.info?.name;
+        return<div  className="menuDisplay">
+            <div>
+                <button className="menu_button" onClick={()=>{handleCart(name)}}>Add Items</button>
+            </div>
+             {name}
              </div>
     }
 
